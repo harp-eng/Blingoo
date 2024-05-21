@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Frontend\FrontendController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\LanguageController;
 use App\Livewire\Privacy;
 use App\Livewire\Terms;
@@ -22,38 +23,13 @@ require __DIR__.'/auth.php';
 * --------------------------------------------------------------------
 */
 
-// home route
-Route::get('home', [FrontendController::class, 'index'])->name('home');
+Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('index');
 
 // Language Switch
 Route::get('language/{language}', [LanguageController::class, 'switch'])->name('language.switch');
 
-Route::get('dashboard', 'App\Http\Controllers\Frontend\FrontendController@index')->name('dashboard');
-
-// pages
-Route::get('terms', Terms::class)->name('terms');
-Route::get('privacy', Privacy::class)->name('privacy');
-
 Route::group(['namespace' => 'App\Http\Controllers\Frontend', 'as' => 'frontend.'], function () {
-    Route::get('/', 'FrontendController@index')->name('index');
-
-    Route::group(['middleware' => ['auth']], function () {
-        /*
-        *
-        *  Users Routes
-        *
-        * ---------------------------------------------------------------------
-        */
-        $module_name = 'users';
-        $controller_name = 'UserController';
-        Route::get('profile/edit', ['as' => "{$module_name}.profileEdit", 'uses' => "{$controller_name}@profileEdit"]);
-        Route::patch('profile/edit', ['as' => "{$module_name}.profileUpdate", 'uses' => "{$controller_name}@profileUpdate"]);
-        Route::get('profile/changePassword', ['as' => "{$module_name}.changePassword", 'uses' => "{$controller_name}@changePassword"]);
-        Route::patch('profile/changePassword', ['as' => "{$module_name}.changePasswordUpdate", 'uses' => "{$controller_name}@changePasswordUpdate"]);
-        Route::get('profile/{username?}', ['as' => "{$module_name}.profile", 'uses' => "{$controller_name}@profile"]);
-        Route::get("{$module_name}/emailConfirmationResend", ['as' => "{$module_name}.emailConfirmationResend", 'uses' => "{$controller_name}@emailConfirmationResend"]);
-        Route::delete("{$module_name}/userProviderDestroy", ['as' => "{$module_name}.userProviderDestroy", 'uses' => "{$controller_name}@userProviderDestroy"]);
-    });
+    Route::get('/', [AuthenticatedSessionController::class, 'create'])->name('index');
 });
 
 /*

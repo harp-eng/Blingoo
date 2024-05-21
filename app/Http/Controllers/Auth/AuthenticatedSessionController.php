@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
 
             event(new UserLoginSuccess($request, $user));
 
-            return redirect()->intended(route('home', absolute: false));
+            return redirect()->intended(route('backend.dashboard', absolute: false));
         }
 
         return back()->withErrors([
