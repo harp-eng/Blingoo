@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -21,6 +22,7 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     use Notifiable;
     use SoftDeletes;
     use UserPresenter;
+    use HasApiTokens;
 
     protected $guarded = [
         'id',

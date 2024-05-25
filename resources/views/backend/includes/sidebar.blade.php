@@ -34,6 +34,15 @@ $notifications_latest = optional($notifications)->take(5);
         </li>
 
         @php
+            $module_name = "areas";
+            $text = __('Areas');
+            $icon = "fa-solid fa-map-marker";
+            $permission = "view_".$module_name;
+            $url = route('backend.'.$module_name.'.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
+        @php
             $module_name = "posts";
             $text = __('Posts');
             $icon = "fa-regular fa-file-lines";
