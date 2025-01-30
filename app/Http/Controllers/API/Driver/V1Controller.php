@@ -3,6 +3,11 @@
 namespace App\Http\Controllers\API\Driver;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class V1Controller extends Controller
 {
@@ -34,7 +39,7 @@ class V1Controller extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            $user = Auth::user();
+            $user = User::find(Auth::user());
             $token = $user->createToken('LaravelPassportAuth')->accessToken;
 
             return response()->json(['token' => $token], 200);

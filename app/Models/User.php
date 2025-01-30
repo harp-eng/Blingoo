@@ -10,9 +10,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Laravel\Passport\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Permission\Traits\HasRoles;
-use Laravel\Passport\HasApiTokens;
+use App\Models\VendorDB;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements HasMedia, MustVerifyEmail
 {
@@ -105,5 +110,34 @@ class User extends Authenticatable implements HasMedia, MustVerifyEmail
     public function getRolesListAttribute()
     {
         return array_map('intval', $this->roles->pluck('id')->toArray());
+    }
+
+    public function createVendorDatabase()
+    {
+        Log::info("===== Vendor creation initiated for user: {$this->id}");
+
+        $user = User::find($this->id);
+
+        if (!$user || !$user->hasRole('administrator')) {
+            Log::warning("User {$this->id} does not have administrator role.");
+            return;
+        }
+
+        Log::info("===== Creating vendor database for user: {$this->id}");
+
+        $databaseName = "vendor_{$user->id}";
+
+        try {
+            // Create database if it does not exist
+            DB::statement("CREATE DATABASE IF NOT EXISTS `{$databaseName}`");
+
+            // Store database details
+            VendorDB::updateOrCreate(
+                ['domain' => $user->email],
+                ['database' => $databaseName]
+            );
+        } catch (\Exception $e) {
+            Log::error("Error creating vendor database for user {$this->id}: {$e->getMessage()}");
+        }
     }
 }

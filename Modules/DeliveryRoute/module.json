@@ -1,0 +1,13 @@
+{
+    "name": "DeliveryRoute",
+    "alias": "deliveryroute",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\DeliveryRoute\\Providers\\DeliveryRouteServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

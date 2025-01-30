@@ -2,5 +2,12 @@
     "Post": true,
     "Category": true,
     "Tag": true,
-    "Area": true
+    "Area": true,
+    "Brand": true,
+    "Unit": true,
+    "Product": true,
+    "DeliveryTimeSlot": true,
+    "DeliveryRoute": true,
+    "Order": true,
+    "SubscriptionPlan": true
 }

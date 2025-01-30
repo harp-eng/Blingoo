@@ -6,6 +6,8 @@ use App\Models\Permission;
 use App\Models\Role;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Str;
 
 /**
  * Class PermissionRoleTableSeeder.
@@ -36,6 +38,8 @@ class PermissionRoleTableSeeder extends Seeder
         $executive->givePermissionTo('view_backend');
 
         $user = Role::create(['id' => '5', 'name' => 'user']);
+        $user = Role::create(['id' => '6', 'name' => 'customer']);
+        $user = Role::create(['id' => '7', 'name' => 'driver']);
     }
 
     public function CreateDefaultPermissions()
@@ -69,5 +73,17 @@ class PermissionRoleTableSeeder extends Seeder
         echo "\n _Comments_ Permissions Created.";
 
         echo "\n\n";
+
+        $modulesPath = base_path('Modules');
+        $moduleDirectories = File::directories($modulesPath);
+
+        foreach ($moduleDirectories as $moduleDirectory) {
+            $moduleName = basename($moduleDirectory);
+            $moduleName = Str::lower(Str::plural($moduleName));
+
+            Artisan::call('auth:permissions', [
+                'name' => $moduleName,
+            ]);
+        }
     }
 }

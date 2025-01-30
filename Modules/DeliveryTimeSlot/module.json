@@ -1,0 +1,13 @@
+{
+    "name": "DeliveryTimeSlot",
+    "alias": "deliverytimeslot",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\DeliveryTimeSlot\\Providers\\DeliveryTimeSlotServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
