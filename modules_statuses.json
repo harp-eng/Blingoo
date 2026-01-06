@@ -10,5 +10,6 @@
     "SubscriptionPlan": true,
     "Banner": true,
     "Container": true,
-    "Tax": true
+    "Tax": true,
+    "Invoice": true
 }

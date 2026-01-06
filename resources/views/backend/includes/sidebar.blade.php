@@ -70,6 +70,15 @@
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
 
         @php
+            $module_name = 'invoices';
+            $text = __('Invoices');
+            $icon = 'fa-solid fa-box'; // Set the icon for invoices
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
+        @php
             $module_name = 'deliveryroutes';
             $text = __('Delivery Routes');
             $icon = 'fa-solid fa-truck'; // Set the icon for delivery routes
