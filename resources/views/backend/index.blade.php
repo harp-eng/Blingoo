@@ -7,7 +7,7 @@
 @endsection
 
 @section('content')
-<div class="card mb-4 ">
+<!-- <div class="card mb-4 ">
     <div class="card-body">
 
         <x-backend.section-header>
@@ -18,14 +18,14 @@
                     <i class="fa-solid fa-bullhorn"></i>
                 </button>
             </x-slot>
-        </x-backend.section-header>
+        </x-backend.section-header> -->
 
         <!-- Dashboard Content Area -->
         
         <!-- / Dashboard Content Area -->
 
-    </div>
-</div>
+    <!-- </div>
+</div> -->
 
 {{-- Demo content --}}
 @include("backend.includes.dashboard_demo_data")

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 * --------------------------------------------------------------------
 */
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 /*
 *
@@ -45,6 +45,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Backend', 'prefix' => 'admin'
      */
     Route::get('/', 'BackendController@index')->name('home');
     Route::get('dashboard', 'BackendController@index')->name('dashboard');
+    Route::post("update-status", ['as' => "updateStatus", 'uses' => "BackendBaseController@update_status"]);
 
     /*
      *

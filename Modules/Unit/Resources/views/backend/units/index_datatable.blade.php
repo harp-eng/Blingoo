@@ -55,6 +55,9 @@
                                 @lang("unit::text.name")
                             </th>
                             <th>
+                                @lang("unit::text.status")
+                            </th>
+                            <th>
                                 @lang("unit::text.updated_at")
                             </th>
                             <th class="text-end">
@@ -106,6 +109,10 @@
             {
                 data: 'name',
                 name: 'name'
+            },
+            {
+                data: 'status',
+                name: 'status'
             },
             {
                 data: 'updated_at',

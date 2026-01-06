@@ -1,0 +1,13 @@
+{
+    "name": "Container",
+    "alias": "container",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\Container\\Providers\\ContainerServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}

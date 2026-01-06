@@ -34,6 +34,11 @@ class BaseModel extends Model implements HasMedia
      */
     public function registerMediaConversions(?Media $media = null): void
     {
+        $this->addMediaConversion('thumb50')
+            ->width(50)
+            ->height(50)
+            ->quality(70);
+
         $this->addMediaConversion('thumb')
             ->width(250)
             ->height(250)
@@ -52,7 +57,7 @@ class BaseModel extends Model implements HasMedia
      */
     public function getTableColumns()
     {
-        $table_name = DB::getTablePrefix().$this->getTable();
+        $table_name = DB::getTablePrefix() . $this->getTable();
 
         switch (config('database.default')) {
             case 'sqlite':
@@ -60,7 +65,7 @@ class BaseModel extends Model implements HasMedia
                 break;
             case 'mysql':
             case 'mariadb':
-                $columns = DB::select('SHOW COLUMNS FROM '.$table_name);
+                $columns = DB::select('SHOW COLUMNS FROM ' . $table_name);
                 $columns = array_map(function ($column) {
                     return [
                         'name' => $column->Field,
@@ -105,7 +110,7 @@ class BaseModel extends Model implements HasMedia
                 break;
 
             default:
-                $return_string = '<span class="badge bg-primary">Status:'.$this->status.'</span>';
+                $return_string = '<span class="badge bg-primary">Status:' . $this->status . '</span>';
                 break;
         }
 

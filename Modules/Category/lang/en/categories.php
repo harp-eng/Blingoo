@@ -3,6 +3,7 @@
 return [
 
     'name' => 'Name',
+    'image' => 'Image',
     'slug' => 'Slug',
     'created_by_alias' => 'Author Name Alias',
     'intro' => 'Intro',

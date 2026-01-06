@@ -38,8 +38,8 @@
                                     </a>
                                 </li>
                                 <!-- <li>
-                                    <hr class="dropdown-divider">
-                                </li> -->
+                                            <hr class="dropdown-divider">
+                                        </li> -->
                             </ul>
                         </div>
                     @endcan
@@ -57,6 +57,15 @@
                                     </th>
                                     <th>
                                         @lang('category::text.name')
+                                    </th>
+                                    <th>
+                                        @lang('category::text.image')
+                                    </th>
+                                    <th>
+                                        @lang('category::text.status')
+                                    </th>
+                                    <th>
+                                        @lang('category::text.parent_category')
                                     </th>
                                     <th>
                                         @lang('category::text.updated_at')
@@ -110,6 +119,17 @@
                 {
                     data: 'name',
                     name: 'name'
+                },
+                {
+                    data: 'image',
+                    name: 'image'
+                },
+                {
+                    data: 'status',
+                    name: 'status'
+                }, {
+                    data: 'parent_id',
+                    name: 'parent_id'
                 },
                 {
                     data: 'updated_at',

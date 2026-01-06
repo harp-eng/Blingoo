@@ -84,6 +84,7 @@ class PermissionRoleTableSeeder extends Seeder
             Artisan::call('auth:permissions', [
                 'name' => $moduleName,
             ]);
+            echo "\n $moduleName Permissions Created.";
         }
     }
 }

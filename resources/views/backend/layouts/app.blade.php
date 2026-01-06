@@ -25,6 +25,9 @@
 
         <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css?family=Noto+Sans+Bengali+UI&display=swap" rel="stylesheet" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
         <style>
             body {
                 font-family: Ubuntu, "Noto Sans Bengali UI", Arial, Helvetica, sans-serif
@@ -50,7 +53,7 @@
           @include('backend.includes.header')
           
           <div class="body flex-grow-1">
-                <div class="container-lg">
+                <div class="container-fluid">
 
                     @include('flash::message')
 

@@ -51,7 +51,7 @@ class CategoriesController extends BackendBaseController
         $page_heading = label_case($module_title);
         $title = $page_heading . ' ' . label_case($module_action);
 
-        $$module_name = $module_model::select('id', 'name', 'updated_at');
+        $$module_name = $module_model::select('id', 'name', 'status', 'parent_id', 'updated_at')->with(['media', 'parent']);
 
         $data = $$module_name;
 
@@ -62,8 +62,20 @@ class CategoriesController extends BackendBaseController
                 return view('backend.includes.action_column', compact('module_name', 'data'));
             })
             ->editColumn('name', '<strong>{{$name}}</strong>')
+            ->editColumn('parent_id', function ($item) {
+                if ($item->parent) {
+                    return '<strong>' . e($item->parent->name) . '</strong>';
+                }
+                return '-'; 
+            })
+            ->addColumn('image', function ($item) {
+                $url = $item->getFirstMediaUrl($this->module_name);
+                if ($url) {
+                    return '<img src="' . e($url) . '" alt="Image" style="max-width:50px; height:auto;">';
+                }
+                return '';
+            })
             ->editColumn('updated_at', function ($data) {
-                $module_name = $this->module_name;
 
                 $diff = Carbon::now()->diffInHours($data->updated_at);
 
@@ -72,8 +84,25 @@ class CategoriesController extends BackendBaseController
                 }
 
                 return $data->updated_at->isoFormat('llll');
+            })->editColumn('status', function ($data) {
+                $checked = $data->status ? 'checked' : '';
+                return '
+                    <div class="form-check form-switch">
+                        <input 
+                            class="form-check-input toggle-status" 
+                            type="checkbox" 
+                            role="switch" 
+                            id="switch_' . $data->id . '" 
+                            name="status" 
+                            data-id="' . $data->id . '" 
+                            ' . $checked . '>
+                        <label class="form-check-label" for="switch_' . $data->id . '">
+                            ' . ($data->status ? 'Enabled' : 'Disabled') . '
+                        </label>
+                    </div>
+                ';
             })
-            ->rawColumns(['name', 'action'])
+            ->rawColumns(['name', 'action', 'status', 'parent_id', 'image'])
             ->orderColumns(['id'], '-:column $1')
             ->make(true);
     }
@@ -106,13 +135,20 @@ class CategoriesController extends BackendBaseController
             'status' => 'nullable|max:191',
         ]);
 
-        $$module_name_singular = $module_model::create($request->except('image'));
+        $$module_name_singular = $module_model::create($request->only('name', 'slug', 'description', 'order', 'status'));
 
         if ($request->image) {
             $media = $$module_name_singular->addMedia($request->file('image'))->toMediaCollection($module_name);
             $$module_name_singular->image = $media->getUrl();
             $$module_name_singular->save();
         }
+
+        // Store Meta Data
+        $$module_name_singular->metaData()->create([
+            'meta_title'       => $request->input('meta_title'),
+            'meta_keywords'    => $request->input('meta_keywords'),
+            'meta_description' => $request->input('meta_description')
+        ]);
 
         flash("New '" . Str::singular($module_title) . "' Added")->success()->important();
 
@@ -181,7 +217,7 @@ class CategoriesController extends BackendBaseController
 
         $$module_name_singular = $module_model::findOrFail($id);
 
-        $$module_name_singular->update($request->except('image', 'image_remove'));
+        $$module_name_singular->update($request->except('image', 'image_remove', 'meta_title', 'meta_description', 'meta_keyword'));
 
         // Image
         if ($request->hasFile('image')) {
@@ -203,6 +239,20 @@ class CategoriesController extends BackendBaseController
                 $$module_name_singular->save();
             }
         }
+
+        // Store or Update Meta Data
+        $$module_name_singular->metaData()->updateOrCreate(
+            [
+                'model_type' => get_class($$module_name_singular), // Ensure correct model type
+                'model_id'   => $$module_name_singular->id,
+            ],
+            [
+                'meta_title'       => $request->input('meta_title'),
+                'meta_keywords'    => $request->input('meta_keywords'),
+                'meta_description' => $request->input('meta_description'),
+            ]
+        );
+
 
         flash(Str::singular($module_title) . "' Updated Successfully")->success()->important();
 

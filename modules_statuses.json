@@ -1,7 +1,5 @@
 {
-    "Post": true,
     "Category": true,
-    "Tag": true,
     "Area": true,
     "Brand": true,
     "Unit": true,
@@ -9,5 +7,8 @@
     "DeliveryTimeSlot": true,
     "DeliveryRoute": true,
     "Order": true,
-    "SubscriptionPlan": true
+    "SubscriptionPlan": true,
+    "Banner": true,
+    "Container": true,
+    "Tax": true
 }

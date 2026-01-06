@@ -20,16 +20,13 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug')->nullable();
             $table->text('description')->nullable();
-
-            $table->string('group_name')->nullable();
             $table->string('image')->nullable();
-
-            $table->string('meta_title')->nullable();
-            $table->text('meta_description')->nullable();
-            $table->text('meta_keyword')->nullable();
 
             $table->integer('order')->nullable();
             $table->string('status')->default(CategoryStatus::Active->name);
+
+            $table->unsignedBigInteger('parent_id')->nullable(); // Parent ID column
+            $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade'); // Foreign key constraint
 
             $table->integer('created_by')->unsigned()->nullable();
             $table->integer('updated_by')->unsigned()->nullable();

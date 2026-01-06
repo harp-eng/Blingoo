@@ -3,6 +3,8 @@
 return [
 
     'name' => 'Name',
+    'image' => 'Image',
+    'parent_category' => 'Parent Category',
     'slug' => 'Slug',
     'description' => 'Description',
     'status' => 'Status',

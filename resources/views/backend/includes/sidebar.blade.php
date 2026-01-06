@@ -1,7 +1,7 @@
 <?php
-$notifications = optional(auth()->user())->unreadNotifications;
-$notifications_count = optional($notifications)->count();
-$notifications_latest = optional($notifications)->take(5);
+    $notifications = optional(auth()->user())->unreadNotifications;
+    $notifications_count = optional($notifications)->count();
+    $notifications_latest = optional($notifications)->take(5);
 ?>
 
 <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
@@ -16,7 +16,7 @@ $notifications_latest = optional($notifications)->take(5);
         </div>
         <button class="btn-close d-lg-none" data-coreui-dismiss="offcanvas" data-coreui-theme="dark" type="button"
             aria-label="Close"
-            onclick="coreui.Sidebar.getInstance(document.querySelector(&quot;#sidebar&quot;)).toggle()"></button>
+            onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()"></button>
     </div>
     <ul class="sidebar-nav" data-coreui="navigation" data-simplebar>
         <li class="nav-item">
@@ -34,130 +34,113 @@ $notifications_latest = optional($notifications)->take(5);
         </li>
 
         @php
-            $module_name = "areas";
+            $module_name = 'areas';
             $text = __('Areas');
-            $icon = "fa-solid fa-map-marker";
-            $permission = "view_".$module_name;
-            $url = route('backend.'.$module_name.'.index');
+            $icon = 'fa-solid fa-map-marker';
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
         @endphp
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
 
         @php
-            $module_name = "posts";
-            $text = __('Posts');
-            $icon = "fa-regular fa-file-lines";
-            $permission = "view_".$module_name;
-            $url = route('backend.'.$module_name.'.index');
+            $module_name = 'categories';
+            $text = __('Categories');
+            $icon = 'fa-solid fa-cogs'; // Set the icon for categories
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
         @endphp
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
 
         @php
-        $module_name = "categories";
-        $text = __('Categories');
-        $icon = "fa-solid fa-cogs"; // Set the icon for categories
-        $permission = "view_".$module_name;
-        $url = route('backend.'.$module_name.'.index');
-    @endphp
-    <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-    
-    @php
-        $module_name = "brands";
-        $text = __('Brands');
-        $icon = "fa-solid fa-tag"; // Set the icon for brands
-        $permission = "view_".$module_name;
-        $url = route('backend.'.$module_name.'.index');
-    @endphp
-    <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-    
-    @php
-        $module_name = "units";
-        $text = __('Units');
-        $icon = "fa-solid fa-box"; // Set the icon for units
-        $permission = "view_".$module_name;
-        $url = route('backend.'.$module_name.'.index');
-    @endphp
-    <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-    
-    @php
-        $module_name = "deliveryroutes";
-        $text = __('Delivery Routes');
-        $icon = "fa-solid fa-truck"; // Set the icon for delivery routes
-        $permission = "view_".$module_name;
-        $url = route('backend.'.$module_name.'.index');
-    @endphp
-    <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-    
-    @php
-        $module_name = "deliverytimeslots";
-        $text = __('Delivery Time Slots');
-        $icon = "fa-solid fa-calendar-check"; // Set the icon for delivery time slots
-        $permission = "view_".$module_name;
-        $url = route('backend.'.$module_name.'.index');
-    @endphp
-    <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-
-    @php
-    $module_name = "products";
-    $text = __('Products');
-    $icon = "fa-solid fa-cube"; // Set the icon for products
-    $permission = "view_".$module_name;
-    $url = route('backend.'.$module_name.'.index');
-@endphp
-<x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-
-@php
-    $module_name = "orders";
-    $text = __('Orders');
-    $icon = "fa-solid fa-box-open"; // Set the icon for orders
-    $permission = "view_".$module_name;
-    $url = route('backend.'.$module_name.'.index');
-@endphp
-<x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-
-    
-        
-        @php
-            $module_name = "tags";
-            $text = __('Tags');
-            $icon = "fa-solid fa-tags";
-            $permission = "view_".$module_name;
-            $url = route('backend.'.$module_name.'.index');
+            $module_name = 'brands';
+            $text = __('Brands');
+            $icon = 'fa-solid fa-tag'; // Set the icon for brands
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
         @endphp
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-        
+
         @php
-            $module_name = "settings";
+            $module_name = 'units';
+            $text = __('Units');
+            $icon = 'fa-solid fa-box'; // Set the icon for units
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
+        @php
+            $module_name = 'deliveryroutes';
+            $text = __('Delivery Routes');
+            $icon = 'fa-solid fa-truck'; // Set the icon for delivery routes
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
+        @php
+            $module_name = 'deliverytimeslots';
+            $text = __('Delivery Time Slots');
+            $icon = 'fa-solid fa-calendar-check'; // Set the icon for delivery time slots
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
+        @php
+            $module_name = 'products';
+            $text = __('Products');
+            $icon = 'fa-solid fa-cube'; // Set the icon for products
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
+        @php
+            $module_name = 'orders';
+            $text = __('Orders');
+            $icon = 'fa-solid fa-box-open'; // Set the icon for orders
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
+
+
+
+        @php
+            $module_name = 'settings';
             $text = __('Settings');
-            $icon = "fa-solid fa-gears";
-            $permission = "edit_".$module_name;
-            $url = route('backend.'.$module_name);
+            $icon = 'fa-solid fa-gears';
+            $permission = 'edit_' . $module_name;
+            $url = route('backend.' . $module_name);
         @endphp
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-        
+
         @php
-            $module_name = "backups";
+            $module_name = 'backups';
             $text = __('Backups');
-            $icon = "fa-solid fa-box-archive";
-            $permission = "view_".$module_name;
-            $url = route('backend.'.$module_name.'.index');
+            $icon = 'fa-solid fa-box-archive';
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
         @endphp
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-        
+
         @php
-            $module_name = "users";
+            $module_name = 'users';
             $text = __('Users');
-            $icon = "fa-solid fa-user-group";
-            $permission = "view_".$module_name;
-            $url = route('backend.'.$module_name.'.index');
+            $icon = 'fa-solid fa-user-group';
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
         @endphp
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
-        
+
         @php
-            $module_name = "roles";
+            $module_name = 'roles';
             $text = __('Roles');
-            $icon = "fa-solid fa-user-shield";
-            $permission = "view_".$module_name;
-            $url = route('backend.'.$module_name.'.index');
+            $icon = 'fa-solid fa-user-shield';
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
         @endphp
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
 
