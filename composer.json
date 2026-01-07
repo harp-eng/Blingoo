@@ -30,6 +30,7 @@
         "nasirkhan/module-manager": "^2.0",
         "predis/predis": "^2.3",
         "rakutentech/laravel-request-docs": "^2.41",
+        "simshaun/recurr": "^6.0",
         "spatie/laravel-activitylog": "^4.8",
         "spatie/laravel-backup": "^8.6",
         "spatie/laravel-html": "^3.6",
