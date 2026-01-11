@@ -79,6 +79,15 @@
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
 
         @php
+            $module_name = 'reports';
+            $text = __('Reports');
+            $icon = 'fa-solid fa-box'; // Set the icon for reports
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
+        @php
             $module_name = 'deliveryroutes';
             $text = __('Delivery Routes');
             $icon = 'fa-solid fa-truck'; // Set the icon for delivery routes

@@ -123,3 +123,51 @@ Route::group(['namespace' => 'App\Http\Controllers\Backend', 'prefix' => 'admin'
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth', 'can:view_backend']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
+
+
+Route::group([
+    'namespace'  => 'App\Http\Controllers\Backend',
+    'prefix'     => 'admin',
+    'as'         => 'backend.',
+    'middleware' => ['auth', 'can:view_backend']
+], function () {
+
+    Route::prefix('reports')->as('reports.')->group(function () {
+
+        // ===== Sales =====
+        Route::get('/index', 'ReportsController@index')->name('index');
+        Route::get('/sales', 'ReportsController@sales')->name('sales');
+        Route::get('/transactions', 'ReportsController@transactions')->name('transactions');
+        Route::get('/customer-sales', 'ReportsController@customerSales')->name('customerSales');
+        Route::get('/product-sales', 'ReportsController@productSales')->name('productSales');
+        Route::get('/schedule-sales', 'ReportsController@scheduleSales')->name('scheduleSales');
+        Route::get('/area-sales', 'ReportsController@areaSales')->name('areaSales');
+        Route::get('/product-performance', 'ReportsController@productPerformance')->name('productPerformance');
+        Route::get('/reconciliation', 'ReportsController@reconciliation')->name('reconciliation');
+
+        // ===== Payments =====
+        Route::get('/payments-received', 'ReportsController@paymentsReceived')->name('paymentsReceived');
+        Route::get('/failed-payments', 'ReportsController@failedPayments')->name('failedPayments');
+        Route::get('/monthly-billing', 'ReportsController@monthlyBilling')->name('monthlyBilling');
+        Route::get('/driver-cash', 'ReportsController@driverCash')->name('driverCash');
+        Route::get('/revenue-per-customer', 'ReportsController@revenuePerCustomer')->name('revenuePerCustomer');
+        Route::get('/downloads', 'ReportsController@downloads')->name('downloads');
+
+        // ===== Inventory =====
+        Route::get('/inventory', 'ReportsController@inventory')->name('inventory');
+        Route::get('/future-inventory', 'ReportsController@futureInventory')->name('futureInventory');
+        Route::get('/dispatch', 'ReportsController@dispatch')->name('dispatch');
+
+        // ===== Customer =====
+        Route::get('/containers', 'ReportsController@containers')->name('containers');
+        Route::get('/customers-by-drivers', 'ReportsController@customersByDrivers')->name('customersByDrivers');
+
+        // ===== Delivery =====
+        Route::get('/delivery-sales', 'ReportsController@deliverySales')->name('deliverySales');
+        Route::get('/delivery-summary', 'ReportsController@deliverySummary')->name('deliverySummary');
+        Route::get('/orders-by-driver', 'ReportsController@ordersByDriver')->name('ordersByDriver');
+        Route::get('/rejected-orders', 'ReportsController@rejectedOrders')->name('rejectedOrders');
+        Route::get('/area-delivery-summary', 'ReportsController@areaDeliverySummary')->name('areaDeliverySummary');
+        Route::get('/area-delivery-detail', 'ReportsController@areaDeliveryDetail')->name('areaDeliveryDetail');
+    });
+});
