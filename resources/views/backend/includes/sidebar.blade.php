@@ -1,7 +1,7 @@
 <?php
-    $notifications = optional(auth()->user())->unreadNotifications;
-    $notifications_count = optional($notifications)->count();
-    $notifications_latest = optional($notifications)->take(5);
+$notifications = optional(auth()->user())->unreadNotifications;
+$notifications_count = optional($notifications)->count();
+$notifications_latest = optional($notifications)->take(5);
 ?>
 
 <div class="sidebar sidebar-dark sidebar-fixed border-end" id="sidebar">
@@ -33,46 +33,55 @@
             </a>
         </li>
 
-        @php
-            $module_name = 'areas';
-            $text = __('Areas');
-            $icon = 'fa-solid fa-map-marker';
-            $permission = 'view_' . $module_name;
-            $url = route('backend.' . $module_name . '.index');
-        @endphp
-        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+        @can('view_categories') {{-- You can use any permission that covers all sub-items --}}
+            <li class="nav-group" aria-expanded="true">
+                <a class="nav-link nav-group-toggle" href="#">
+                    <i class="nav-icon fa-solid fa-cogs"></i>&nbsp;@lang('Catalog')
+                </a>
+                <ul class="nav-group-items compact" style="height: auto;">
 
-        @php
-            $module_name = 'categories';
-            $text = __('Categories');
-            $icon = 'fa-solid fa-cogs'; // Set the icon for categories
-            $permission = 'view_' . $module_name;
-            $url = route('backend.' . $module_name . '.index');
-        @endphp
-        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+                    @php
+                        $modules = [
+                            ['name' => 'categories', 'text' => __('Categories'), 'icon' => 'fa-solid fa-folder'],
+                            ['name' => 'brands', 'text' => __('Brands'), 'icon' => 'fa-solid fa-tag'],
+                            ['name' => 'units', 'text' => __('Units'), 'icon' => 'fa-solid fa-ruler'],
+                            ['name' => 'products', 'text' => __('Products'), 'icon' => 'fa-solid fa-cube'],
+                        ];
+                    @endphp
 
-        @php
-            $module_name = 'brands';
-            $text = __('Brands');
-            $icon = 'fa-solid fa-tag'; // Set the icon for brands
-            $permission = 'view_' . $module_name;
-            $url = route('backend.' . $module_name . '.index');
-        @endphp
-        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+                    @foreach ($modules as $module)
+                        @php
+                            $permission = 'view_' . $module['name'];
+                            $url = route('backend.' . $module['name'] . '.index');
+                        @endphp
 
-        @php
-            $module_name = 'units';
-            $text = __('Units');
-            $icon = 'fa-solid fa-box'; // Set the icon for units
-            $permission = 'view_' . $module_name;
-            $url = route('backend.' . $module_name . '.index');
-        @endphp
-        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+                        @can($permission)
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ $url }}">
+                                    <span class="nav-icon"><i class="{{ $module['icon'] }}"></i></span> {{ $module['text'] }}
+                                </a>
+                            </li>
+                        @endcan
+                    @endforeach
+
+                </ul>
+            </li>
+        @endcan
+
 
         @php
             $module_name = 'invoices';
             $text = __('Invoices');
             $icon = 'fa-solid fa-box'; // Set the icon for invoices
+            $permission = 'view_' . $module_name;
+            $url = route('backend.' . $module_name . '.index');
+        @endphp
+        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+
+        @php
+            $module_name = 'promotions';
+            $text = __('Promotions');
+            $icon = 'fa-solid fa-box'; // Set the icon for promotions
             $permission = 'view_' . $module_name;
             $url = route('backend.' . $module_name . '.index');
         @endphp
@@ -87,32 +96,48 @@
         @endphp
         <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
 
-        @php
-            $module_name = 'deliveryroutes';
-            $text = __('Delivery Routes');
-            $icon = 'fa-solid fa-truck'; // Set the icon for delivery routes
-            $permission = 'view_' . $module_name;
-            $url = route('backend.' . $module_name . '.index');
-        @endphp
-        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+        @can('view_delivery')
+            <li class="nav-group" aria-expanded="true">
+                <a class="nav-link nav-group-toggle" href="#">
+                    <i class="nav-icon fa-solid fa-truck"></i>&nbsp;@lang('Delivery')
+                </a>
+                <ul class="nav-group-items compact" style="height: auto;">
+                    {{-- Delivery Routes --}}
+                    @can('view_deliveryroutes')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('backend.deliveryroutes.index') }}">
+                                <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
+                                @lang('Delivery Routes')
+                            </a>
+                        </li>
+                    @endcan
 
-        @php
-            $module_name = 'deliverytimeslots';
-            $text = __('Delivery Time Slots');
-            $icon = 'fa-solid fa-calendar-check'; // Set the icon for delivery time slots
-            $permission = 'view_' . $module_name;
-            $url = route('backend.' . $module_name . '.index');
-        @endphp
-        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+                    {{-- Delivery Time Slots --}}
+                    @can('view_deliverytimeslots')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('backend.deliverytimeslots.index') }}">
+                                <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
+                                @lang('Delivery Time Slots')
+                            </a>
+                        </li>
+                    @endcan
 
-        @php
-            $module_name = 'products';
-            $text = __('Products');
-            $icon = 'fa-solid fa-cube'; // Set the icon for products
-            $permission = 'view_' . $module_name;
-            $url = route('backend.' . $module_name . '.index');
-        @endphp
-        <x-backend.sidebar-nav-item :permission="$permission" :url="$url" :icon="$icon" :text="$text" />
+                    {{-- Areas --}}
+                    @can('view_areas')
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('backend.areas.index') }}">
+                                <span class="nav-icon"><span class="nav-icon-bullet"></span></span>
+                                <i class="nav-icon"></i>&nbsp;@lang('Delivery Areas')
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
+
+
+
+
 
         @php
             $module_name = 'orders';

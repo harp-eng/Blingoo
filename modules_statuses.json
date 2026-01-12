@@ -11,5 +11,6 @@
     "Banner": true,
     "Container": true,
     "Tax": true,
-    "Invoice": true
+    "Invoice": true,
+    "Promotion": true
 }
