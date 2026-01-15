@@ -9,6 +9,17 @@ use Modules\Banner\Models\Banner;
 
 class BannerController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/api/banners",
+     *     summary="Swagger test endpoint",
+     *     tags={"Test"},
+     *     @OA\Response(
+     *         response=200,
+     *         description="Swagger is working"
+     *     )
+     * )
+     */
     public function index()
     {
         $banners = Cache::rememberForever('banners', function () {

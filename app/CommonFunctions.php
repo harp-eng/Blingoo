@@ -34,13 +34,7 @@ trait CommonFunctions
 
         return response()->json(['token' => $token], 200);
     }
-    /**
-     * @LRDparam email string|max:32
-     * // either space or pipe
-     * @LRDparam password string|nullable|max:32
-     * // override the default response codes
-     * @LRDresponses 200|422
-     */
+
     public function login(Request $request)
     {
         // Validate the request
